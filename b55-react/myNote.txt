@@ -1,0 +1,7 @@
+- localStorage adalah web api
+- Definition: localStorage is a web API provided by browsers that allows web applications to store key-value pairs in a web browser. The stored data persists even when the user closes the browser or navigates away from the page.
+- Scope: Data stored in localStorage is specific to the origin (i.e., the combination of protocol, hostname, and port). It means that data stored by one website is not accessible to other websites.
+
+- Restful API adalah api yang mrngikuti aturan
+- request restful tdak boleh ada kata kerja cukup pakai method dari http request-nya
+- 

@@ -1,0 +1,8 @@
+🐬 "@types/node" adalah untuk provide typing untuk built in node modules
+
+😃 Run prisma generate whenever you make changes to your Prisma schema.
+
+- req.body adalah property dsri express
+
+
+

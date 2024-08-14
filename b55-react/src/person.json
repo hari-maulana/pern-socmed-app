@@ -1,0 +1,32 @@
+[
+    {
+        "email": "uYrXU@example.com",
+        "name": "John",
+        "username": "@john",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    {
+        "email": "uYrXU@example.com",
+        "name": "Jane",
+        "username": "@jane",
+        "avatar": "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    {
+        "email": "uYrXU@example.com",
+        "name": "Bob",
+        "username": "@bob",
+        "avatar": "https://randomuser.me/api/portraits/men/2.jpg"
+    },
+    {
+        "email": "uYrXU@example.com",
+        "name": "Alice",
+        "username": "@alice",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    {
+        "email": "uYrXU@example.com",
+        "name": "Charlie",
+        "username": "@charlie",
+        "avatar": "https://randomuser.me/api/portraits/men/3.jpg"
+    }
+]       

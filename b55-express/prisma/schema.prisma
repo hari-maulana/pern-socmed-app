@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id          Int    @id @default(autoincrement())
+  picturePath String
+  content     String
+  likes       Like[]
+  comments Comment[]
+  authorId    Int
+  author      User   @relation(fields: [authorId], references: [id])
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  postId Int
+  user   User @relation(fields: [userId], references: [id])
+  post   Post @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  username String  @unique
+  password String
+  name     String?
+  bio      String?
+
+  posts Post[]
+  likes Like[]
+  comments Comment[]
+
+  profilePict String?
+  gallery     Image[]
+  // swapped
+  followers FollowRelation[] @relation("FollowingRelation")  // is being follower
+  following FollowRelation[] @relation("FollowerRelation") // who that follow
+}
+
+model FollowRelation {
+  follower    User @relation("FollowerRelation", fields: [followerId], references: [id])
+  following   User @relation("FollowingRelation", fields: [followingId], references: [id])
+  followerId  Int
+  followingId Int
+
+  @@id([followerId, followingId])
+}
+
+model Image {
+  id     Int    @id @default(autoincrement())
+  url    String @unique
+  userId Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+//menambah skema
