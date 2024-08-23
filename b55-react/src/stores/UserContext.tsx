@@ -11,12 +11,12 @@ import { User } from './types';
 
 // ini adalah tipe yang akan di provide
 interface UserContextType {
-  user: User | null; // property yang tipenya dari User diaatas
-  setUser: (user: User | null) => void; // method yang mengambil user dan null sebagai argumen
+  user: User | null; // property yang tipenya dari User types
+  setUser: (user: User | null) => void; // method dengan argumen user dengan tipe User(types) dan null
+  // 
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
-
 ////////////////////////////PROVIDER
  
 interface UserProviderProps { //ini adalah tipe dari children provider dibawah
@@ -27,7 +27,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children /* props yang ditu
   const [user, setUser] = useState<User | null>(null); //semua children bisa mengakses state ini
 
   return (
-    <UserContext.Provider value={{ user, setUser }}> //ini mem passing user dan setUser  ke semua anaknya
+    <UserContext.Provider value={{ user, setUser }}> {/*ini mem passing user dan setUser  ke semua anaknya*/}
       {children}
     </UserContext.Provider>
   );

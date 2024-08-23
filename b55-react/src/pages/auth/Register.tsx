@@ -3,10 +3,10 @@ import { Box, Container, Typography, Link } from '@mui/material';
 import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
-import LogoBrand from '../components/commons/LogoBrand';
-import InputField from '../components/commons/InputField';
-import CommonButton from '../components/commons/CommonButton';
-import { useUser } from '../stores/UserContext';
+import LogoBrand from '../../components/commons/LogoBrand';
+import InputField from '../../components/commons/InputField';
+import CommonButton from '../../components/commons/CommonButton';
+import { useUser } from '../../stores/UserContext';
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -16,19 +16,17 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useUser();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    navigate('/');
-    setUser({name: name, email: email})
+    navigate('/auth/login');
     //
     try {
       axios
-        .post('http://localhost:3000/auth/register', {
+        .post(`${import.meta.env.VITE_API_URL}/auth/register`, {
           name: name,
           username: username,
           email: email,

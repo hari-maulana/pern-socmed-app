@@ -1,14 +1,18 @@
 import { RouteObject } from "react-router-dom";
 import RootLayout from "../layout/RootLayout";
-import Register from "../pages/Register";
-import Login from "../pages/Login";
-import Forgot from "../pages/Forgot";
-import Reset from "../pages/Reset";
+import Register from "../pages/auth/Register";
+import Login from "../pages/auth/Login";
+import Forgot from "../pages/auth/Forgot";
+import Reset from "../pages/auth/Reset";
 import AuthLayout from "../layout/AuthLayout";
 import Homepage from "../pages/Homepage";
 import SearchPage from "../pages/SearchPage";
 import FollowsPage from "../pages/FollowsPage";
 import ProfilePage from "../pages/ProfilePage";
+import Home from "../pages/main/Home";
+import Search from "../pages/main/Search";
+import Follows from "../pages/main/Follows";
+import Profile from "../pages/main/Profile";
 
 const routes: RouteObject[] = [
     {
@@ -17,19 +21,19 @@ const routes: RouteObject[] = [
         children: [
             {
                 index: true,
-                element: <Homepage />,
+                element: <Home />,
             },
             {
                 path: "/search",
-                element: <SearchPage />,
+                element: <Search />,
             },
             {
                 path: "/follows",
-                element: <FollowsPage />,
+                element: <Follows />,
             },
             {
                 path: "/profile",
-                element: <ProfilePage />,
+                element: <Profile />,
             }
         ]
     },

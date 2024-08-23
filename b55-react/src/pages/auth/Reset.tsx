@@ -1,8 +1,8 @@
 
 import { Box, Container, Typography} from "@mui/material";
-import LogoBrand from "../components/commons/LogoBrand";
-import InputField from "../components/commons/InputField";
-import CommonButton from "../components/commons/CommonButton";
+import LogoBrand from "../../components/commons/LogoBrand";
+import InputField from "../../components/commons/InputField";
+import CommonButton from "../../components/commons/CommonButton";
 import { useNavigate } from "react-router-dom";
 
 

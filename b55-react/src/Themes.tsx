@@ -10,4 +10,7 @@ export const theme = createTheme({
             main: "#F08A5D",
         },
     },
-})
+    typography: {
+        fontFamily: `roboto`, //
+    },
+});

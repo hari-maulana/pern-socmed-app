@@ -3,9 +3,9 @@ import { Box, Container, Typography, Link } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import LogoBrand from "../components/commons/LogoBrand";
-import InputField from "../components/commons/InputField";
-import CommonButton from "../components/commons/CommonButton";
+import LogoBrand from "../../components/commons/LogoBrand";
+import InputField from "../../components/commons/InputField";
+import CommonButton from "../../components/commons/CommonButton";
 
 const Login: React.FC = () => {
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
     setSuccess("");
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
         emailOrUsername,
         password,
       });

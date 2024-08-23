@@ -13,6 +13,8 @@ import {
 import LogoBrand from "../commons/LogoBrand";
 import CommonButton from "../commons/CommonButton";
 //import MyFormTitle from "../common/MyFormTitle";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../stores/UserContext";
 
 const NAV_ITEMS = [
    {
@@ -51,11 +53,15 @@ const NAV_ITEMS = [
 
 const Leftsidebar = () => {
    const theme = useTheme();
+   const navigate = useNavigate()
+   const { setUser } = useUser();
 
    return (
       <>
-      <Box display={"flex"} flexDirection={"column"}>
+         <Box bgcolor={""} width={"80%"} sx={{ padding: "" }} display={"flex"} flexDirection={"column"}>
 
+        
+      
          <LogoBrand />
          <br />
          {NAV_ITEMS.map((item) => {
@@ -85,7 +91,7 @@ const Leftsidebar = () => {
                         </Box>
                         <Typography
                            color={isActive ? "primary" : theme.palette.text.primary}
-                           sx={{ fontSize: "1.2rem" }}
+                        variant="h6"
                         >
                            {item.name}
                         </Typography>
@@ -98,10 +104,10 @@ const Leftsidebar = () => {
          <Box position={"fixed"} bottom={10} display={"flex"}>
          <LogoutOutlined />
          <Typography sx={{ marginLeft: "10px", ":hover": { color: "red", cursor: "pointer" } }}>
-            <Link onClick={() => window.location.href = "auth/login"} style={{ color: theme.palette.text.primary, textDecoration: "none"}} to={""}>Logout</Link>
+            <Link onClick={() => {navigate("/auth/login"); localStorage.removeItem("token"); setUser(null)}} style={{ color: theme.palette.text.primary, textDecoration: "none"}} to={""}>Logout</Link>
          </Typography>
          </Box>
-      </Box>
+         </Box>
       </>
    );
 };

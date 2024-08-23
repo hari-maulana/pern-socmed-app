@@ -1,5 +1,5 @@
 import React from 'react'
-import UserBar from '../commons/UserBar'
+import UserBar from './UserBar'
 
 const SuggestedUser = () => {
   return (
