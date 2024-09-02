@@ -1,23 +1,14 @@
 {
-    "functions": {
-      "api/index.ts": {
-        "runtime": "nodejs16.x",
-        "maxDuration": 10
-      }
-    },
     "builds": [
       {
         "src": "index.ts",
-        "use": "@vercel/node",
-        "config": {
-          "includeFiles": ["src/**/*.ts"]
-        }
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/"
+        "dest": "index.ts"
       }
     ]
   }
