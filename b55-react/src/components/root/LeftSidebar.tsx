@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import {
   Home as HomeIcon,
@@ -15,6 +15,9 @@ import CommonButton from "../commons/CommonButton";
 //import MyFormTitle from "../common/MyFormTitle";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../stores/UserContext";
+import PostModalForm from "../post/createPost/PostModalForm";
+import PostModal from "../post/createPost/PostModal";
+import { toast } from "react-toastify";
 
 const NAV_ITEMS = [
    {
@@ -100,11 +103,12 @@ const Leftsidebar = () => {
                </NavLink>
             );
          })}
-         <CommonButton text="Create Post" />
+         <Button className="button" sx={{textTransform: "none", marginTop: "20px", backgroundColor: theme.palette.primary.main, fontWeight: "bold", borderRadius: "20px", ":hover": {backgroundColor: "#F6EEDF", color: "#242a2a"}}}>
+         <PostModal />  </Button>
          <Box position={"fixed"} bottom={10} display={"flex"}>
          <LogoutOutlined />
          <Typography sx={{ marginLeft: "10px", ":hover": { color: "red", cursor: "pointer" } }}>
-            <Link onClick={() => {navigate("/auth/login"); localStorage.removeItem("token"); setUser(null)}} style={{ color: theme.palette.text.primary, textDecoration: "none"}} to={""}>Logout</Link>
+            <Link onClick={() => {navigate("/auth/login"); localStorage.removeItem("token"); setUser(null); toast.success("Logout success");}} style={{ color: theme.palette.text.primary, textDecoration: "none"}} to={""}>Logout</Link>
          </Typography>
          </Box>
          </Box>

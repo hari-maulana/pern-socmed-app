@@ -10,6 +10,7 @@ import { User } from './types';
 
 
 // ini adalah tipe yang akan di provide
+// menambahkan type null bermaksud agar ada nilai default walaupun tidak ada user yamg login
 interface UserContextType {
   user: User | null; // property yang tipenya dari User types
   setUser: (user: User | null) => void; // method dengan argumen user dengan tipe User(types) dan null

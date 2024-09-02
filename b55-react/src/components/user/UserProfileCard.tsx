@@ -6,15 +6,30 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
   Typography,
 } from "@mui/material";
 import { theme } from "../../Themes";
-import { useUser } from "../../stores/UserContext";
-import PostModal from "../post/createPost/PostModal";
-import EditProfileModal from "./EditProfileModal";
-const ProfileCard = () => {
-  const { user } = useUser();
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+
+interface User {
+  userId: string;
+  profilePict?: string;
+  username?: string;
+  name?: string;
+  bio?: string;
+}
+
+interface Props {
+  user?: User;
+}
+
+const ProfileCard: React.FC<Props> = ({ user }) => {
   const profilePict = user?.profilePict;
+
+  const navigate = useNavigate();
+
   return (
     <Box
       border={"1px solid"}
@@ -22,9 +37,15 @@ const ProfileCard = () => {
       sx={{ padding: "10px", borderColor: theme.palette.divider }}
     >
       <Box>
-        <Typography variant="h6" marginBottom={"0.75rem"}>
-          Profile
-        </Typography>
+        <Box display={"flex"} alignItems={"center"} mb={2}>
+            <IconButton onClick={() => navigate("/")}>
+              <ArrowBack />
+            </IconButton>
+            <Typography variant="h6" fontWeight={"bold"}>
+              {user?.name}
+            </Typography>
+          </Box>
+
         <CardActionArea>
           <CardMedia
             component="img"
@@ -37,7 +58,7 @@ const ProfileCard = () => {
             }}
           />
           <Avatar
-            src={profilePict ? user.profilePict : ""}
+            src={profilePict ? profilePict : ""}
             sx={{
               width: "60px",
               height: "60px",
@@ -79,7 +100,7 @@ const ProfileCard = () => {
           >
             <Box display={"flex"}>
               <Typography variant="body2" sx={{ color: "primary.main" }}>
-                {user?.following?.length}
+                100
               </Typography>
               <Typography
                 variant="body2"
@@ -92,7 +113,7 @@ const ProfileCard = () => {
                 Following
               </Typography>
               <Typography variant="body2" sx={{ color: "primary.main" }}>
-                {user?.followers?.length}
+                0
               </Typography>
               <Typography
                 variant="body2"
@@ -115,7 +136,7 @@ const ProfileCard = () => {
                   paddingRight: "10px",
                 }}
               >
-                <EditProfileModal />
+                Follow
               </Button>
             </Box>
           </Box>

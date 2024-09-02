@@ -7,6 +7,7 @@ import LogoBrand from '../../components/commons/LogoBrand';
 import InputField from '../../components/commons/InputField';
 import CommonButton from '../../components/commons/CommonButton';
 import { useUser } from '../../stores/UserContext';
+import { toast } from 'react-toastify';
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -21,8 +22,12 @@ const Register: React.FC = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
+    toast.success('Your account has been created! Please login!');
 
-    navigate('/auth/login');
+    setTimeout(() => {
+      navigate('/auth/login');
+    }, 1500);
+
     //
     try {
       axios

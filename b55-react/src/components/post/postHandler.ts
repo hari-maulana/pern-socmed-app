@@ -1,7 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify"
-import { useFetchAllPosts } from "../post/postFetcher";
-
 
 
 const PostHandler = async (content: string, file: File | null) => {
@@ -15,8 +13,8 @@ const PostHandler = async (content: string, file: File | null) => {
                 { content, picturePath },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            useFetchAllPosts();
             toast.success(res.data.message);
+
         } catch (error) {
             toast.error("Failed to post");
         }

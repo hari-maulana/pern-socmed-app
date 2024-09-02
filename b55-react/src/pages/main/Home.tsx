@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { theme } from "../../Themes";
 import RightSidebar from "../../components/root/RightSidebar";
-import Post from "../../components/post/PostBarForm";
+import Post from "../../components/post/createPost/PostBarForm";
 import Feed from "../../components/root/Feed";
 
 

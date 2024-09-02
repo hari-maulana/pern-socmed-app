@@ -8,14 +8,17 @@ datasource db {
 }
 
 model Post {
-  id          Int    @id @default(autoincrement())
-  picturePath String
+  id          Int       @id @default(autoincrement())
+  picturePath String?
   content     String
   likes       Like[]
-  comments Comment[]
+  comments    Comment[]
   authorId    Int
-  author      User   @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt       
 }
+
 
 model Like {
   id     Int  @id @default(autoincrement())

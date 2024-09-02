@@ -1,21 +1,14 @@
 import FeedItem from "../post/FeedItem";
-import { Post } from "../../stores/types";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import PostHandler from "../post/postHandler";
 import { usePost } from "../../stores/PostContext";
-import { useFetchAllPosts } from "../post/postFetcher";
-import { CardActionArea } from "@mui/material";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Feed = () => {
-  const { fetchAllPost } = useFetchAllPosts();
-  const { allPost } = usePost();
+  const { allPost, fetchAllPosts } = usePost();
 
-  
   useEffect(() => {
-    fetchAllPost();
+    fetchAllPosts();
   }, []);
+
 
 
   return (
@@ -24,17 +17,18 @@ const Feed = () => {
         {allPost.map((singlePost: any) => (
           
           <div key={singlePost.id}>
-            <CardActionArea onClick={() => toast.success("Wow so easy !")}>
 
             <FeedItem
+              id={singlePost.id}
               avatar={singlePost.author.profilePict}
               name={singlePost.author.name}
               username={singlePost.author.username}
               updatedAt={singlePost.updatedAt}
               text={singlePost.content}
               image={singlePost.picturePath}
+              like={singlePost.likes}
+              comment={singlePost.comments.length}
             />
-            </CardActionArea>
           </div>
 
         ))}

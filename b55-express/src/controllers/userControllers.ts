@@ -3,10 +3,40 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import { Request } from 'express';
+import RequestWithUser from '../types/customReqTypes';
+import { log } from 'console';
+
 
 const prisma = new PrismaClient();
 const app = express();
 
+/*UNTUK GET DATA DARI USER YANG LOGIN*/
+const getLoggedInUserData = async (req: RequestWithUser, res: express.Response) => {
+  const { userId } = req.user;
+  console.log(req.user);
+  console.log(userId);
+  
+  
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { following: true, followers: true, posts: true, gallery: true}
+    });
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' }); 
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch user' });
+  }
+};
+
+/*UNTUK GET DATA USER SECARA UMUM*/
 const getAllUsers = async (req: express.Request, res: express.Response) => {
     try {
       const users = await prisma.user.findMany({
@@ -20,11 +50,14 @@ const getAllUsers = async (req: express.Request, res: express.Response) => {
   };
 
 
-const getUserById = async (req: express.Request, res: express.Response) => {
+const getUserById = async (req: RequestWithUser, res: express.Response) => {
     const { id } = req.params;
+    console.log(id);
+    
     try {
       const user = await prisma.user.findUnique({
-        where: { id: parseInt(id) }
+        where: { id: parseInt(id) },
+        include: { following: true, followers: true, posts: true, gallery: true}
       });
   
       if (user) {
@@ -43,11 +76,11 @@ const getUserById = async (req: express.Request, res: express.Response) => {
 // UPDATE (Update an existing user)
 const updateUser = async (req: express.Request, res: express.Response) => {
     const { id } = req.params;
-    const { name, email } = req.body;
+    const { name, bio, username, profilePict } = req.body;
     try {
       const user = await prisma.user.update({
         where: { id: parseInt(id) },
-        data: { name, email }
+        data: { name, username, profilePict, bio }
       });
   
       res.json(user);
@@ -71,4 +104,34 @@ const deleteUser = async (req: express.Request, res: express.Response) => {
     }
   };
 
-  export {getAllUsers, getUserById, updateUser, deleteUser}
+  // SEARCH USEER
+  const searchUser = async (req: express.Request, res: express.Response) => {
+    const { query } = req.body;
+
+    try {
+        const users = await prisma.user.findMany({
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: query,
+                            mode: 'insensitive', // Case-insensitive search
+                        },
+                    },
+                    {
+                        username: {
+                            contains: query,
+                            mode: 'insensitive',
+                        },
+                    },
+                ],
+            },
+        });
+
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching users' });
+    }
+}
+
+  export {getLoggedInUserData, getAllUsers, getUserById, updateUser, deleteUser, searchUser}

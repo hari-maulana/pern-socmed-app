@@ -21,6 +21,8 @@ const RootLayout = () => {
 
 
   const token = localStorage.getItem("token");
+  console.log(token);
+  
 
   useEffect(() => {
     // Fetch user data dari server dari user ymag sudah login

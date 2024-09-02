@@ -1,18 +1,24 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { theme } from "../../Themes";
+import FollowButton from "../follows/FollowButton";
+import { useUser } from "../../stores/UserContext";
 
 interface UserBarProps {
+     id?: string;
     avatar?: string;
     name?: string;
     username?: string;
     status?: string;
 }
 
-const UserBar : React.FC<UserBarProps> = ({ avatar, name, username, status}) => {
+const UserBar : React.FC<UserBarProps> = ({id, avatar, name, username, status}) => {
+
+  const { user } = useUser();
+
   return (
     <>
-      <Box display={"flex"} margin={"10px 10px"} justifyContent={"space-between"} alignItems={"center"}>
+      <Box display={"flex"} margin={"10px 10px"} justifyContent={"space-between"} alignItems={"center"} sx={{ height: "60px", paddingBottom: "10px"}}>
         <Box display={"flex"}>
           <Box>
             {/* Avatar */}
@@ -35,21 +41,7 @@ const UserBar : React.FC<UserBarProps> = ({ avatar, name, username, status}) => 
         <Box>
           {/* Follow Button */}
           <Box bgcolor={""}>
-            <Button
-              size="small"
-              sx={{
-                marginLeft: "auto",
-                border: "1px solid",
-                borderColor: "white",
-                color: "white",
-                borderRadius: "15px",
-                textTransform: "none",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-              }}
-            >
-              Follow
-            </Button>
+          <FollowButton userId={user?.id ?? ""} followingId={id ?? ""} />
           </Box>
         </Box>
       </Box>

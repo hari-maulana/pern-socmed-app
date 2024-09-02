@@ -53,9 +53,8 @@ function BasicTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Posts" {...a11yProps(0)} sx={{ width: "33.3%" }}/>
-          <Tab label="Media" {...a11yProps(1)} sx={{ width: "33.4%" }}/>
-          <Tab label="Likes" {...a11yProps(2)} sx={{ width: "33.3%" }}/>
+          <Tab label="Posts" {...a11yProps(0)} sx={{ width: "50%" }}/>
+          <Tab label="Media" {...a11yProps(1)} sx={{ width: "50%" }}/>
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -86,9 +85,7 @@ function BasicTabs() {
       <CustomTabPanel value={value} index={1}>
         <StandardImageList />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
+      
     </Box>
   );
 }

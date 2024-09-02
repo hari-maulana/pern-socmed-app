@@ -14,12 +14,16 @@ import {
   EmojiEmotionsOutlined,
   LocationOnOutlined,
 } from "@mui/icons-material";
-import { useUser } from "../../stores/UserContext";
-import { theme } from "../../Themes";
+import { useUser } from "../../../stores/UserContext";
+import { theme } from "../../../Themes";
 import { toast } from "react-toastify";
-import PostHandler from "./postHandler";
+import PostHandler from "../postHandler";
+import { usePost } from "../../../stores/PostContext";
+
+
 
 const Post = () => {
+  const { fetchAllPosts } = usePost();
   const { user } = useUser();
   const [file, setFile] = useState<File | null>(null);
   const [prevImage, setPrevImage] = useState<string | ArrayBuffer | null>(null);
@@ -47,17 +51,27 @@ const Post = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!content) {
-      toast.error("Post cannot be empty");
-      return;
-    }
+    try {
+      if (!content) {
+        toast.error("Post cannot be empty");
+        return;
+      }
+  
+      await PostHandler(content, file);
+      toast.success("Post has been created");
+      setContent("");
+      setPrevImage(null);
+      setFile(null);
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      fetchAllPosts()}
 
-    await PostHandler(content, file);
-    toast.success("Post has been created");
-    setContent("");
-    setPrevImage(null);
-    setFile(null);
+    
   };
+
+
 
   return (
     <form

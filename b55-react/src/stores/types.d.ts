@@ -9,6 +9,7 @@ export interface User {
     bio?: string;
     followers?: [];
     following?: [];
+    posts?: [];
   }
 
 export interface Post {
@@ -20,6 +21,7 @@ export interface Post {
   likes?: [];
   comments?: [];
   author?: IAuthor
+  
 }
 
 interface IAuthor {

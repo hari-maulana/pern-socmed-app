@@ -1,12 +1,12 @@
 import {
+  CommentBankOutlined,
   Favorite,
   FavoriteBorder,
-  MoreHoriz,
-  Share,
 } from "@mui/icons-material";
 import {
   Avatar,
   Box,
+  CardActionArea,
   Checkbox,
   IconButton,
   ListItem,
@@ -17,18 +17,23 @@ import {
 } from "@mui/material";
 import React from "react";
 import { theme } from "../../Themes";
+import { useNavigate } from "react-router-dom";
+import LikeButton from "./LikeButton";
 
 interface FeedItemProps {
+  id?: string;
   avatar?: string;
   name?: string;
   username?: string;
   updatedAt: string;
   image?: string;
   text?: string;
-  like?: number;
+  like?: [];
+  comment?: number;
 }
 
 const FeedItem: React.FC<FeedItemProps> = ({
+  id,
   avatar,
   name,
   username,
@@ -36,7 +41,10 @@ const FeedItem: React.FC<FeedItemProps> = ({
   text,
   like,
   image,
+  comment,
 }) => {
+  
+  const navigate = useNavigate()
   
   const now = new Date();
 
@@ -44,7 +52,24 @@ const FeedItem: React.FC<FeedItemProps> = ({
   
   const inMilisecond = now.getTime() - postDate.getTime()
 
-  const inHour = Math.floor(inMilisecond / 1000 / 60 / 60)
+  const inMinute = Math.floor(inMilisecond / 1000 / 60)
+
+  
+  
+
+  function formatTime(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+  
+    if (days > 0) {
+      return `${days}d`;
+    } else if(hours > 0) {
+      return `${hours}hr`;
+    } else {
+      return `${minutes}m`;
+    }
+  }
+
   
   
   
@@ -73,14 +98,16 @@ const FeedItem: React.FC<FeedItemProps> = ({
                 marginLeft={"5px"}
                 sx={{ color: theme.palette.text.secondary }}
               >
-                @{username} • {inHour}hr ago
+                @{username} • {formatTime(inMinute)} ago
               </Typography>
             </Box>
-            <Box>
-              <MoreHoriz />
-            </Box>
+            {/* <Box bgcolor={""} height={"fit-content"} >
+            <MoreMenu id={id} />
+            </Box> */}
           </Box>
 
+          <CardActionArea onClick={() => navigate(`/post/${id}`) }>
+            
           <ListItemText
             primary={
               <React.Fragment>
@@ -113,6 +140,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
               />
             )}
           </Box>
+          </CardActionArea>
 
           {/* INTERACTION BUTTON */}
           <Box sx={{ display: "flex", alignItems: "center", padding: "0" }}>
@@ -122,22 +150,22 @@ const FeedItem: React.FC<FeedItemProps> = ({
               flexWrap={"wrap"}
               width={"72px"}
             >
-              <Checkbox
+              {/* <Checkbox
                 size="medium"
                 style={{ width: "", padding: 0 }}
                 icon={<FavoriteBorder sx={{ padding: "0" }} />}
                 checkedIcon={<Favorite />}
-              />
-              <Typography sx={{ color: theme.palette.text.secondary }}>
-                {like}
-              </Typography>
+              /> */}
+                <LikeButton postId={id} initialLikes={like?.length} />
+              
             </Stack>
             <Stack direction={"row"} spacing={1}>
-              <IconButton aria-label="share" style={{ width: "", padding: 0 }}>
-                <Share />
+              <IconButton aria-label="share" style={{ width: "", padding: 0 }} >
+
+                <CommentBankOutlined />
               </IconButton>
               <Typography sx={{ color: theme.palette.text.secondary }}>
-                
+                {comment}
               </Typography>
             </Stack>
           </Box>
