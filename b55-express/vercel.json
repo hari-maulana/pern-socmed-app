@@ -1,10 +1,4 @@
 {
-    "functions": {
-      "index.ts": {
-        "runtime": "nodejs16.x",
-        "maxDuration": 10
-      }
-    },
     "builds": [
       {
         "src": "index.ts",
