@@ -246,11 +246,6 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT;
 
-import { VercelRequest, VercelResponse } from '@vercel/node';
-export default (req: VercelRequest, res: VercelResponse) => {
-  app(req as any, res as any);
-};
-
-// app.listen(port, () => {
-//   console.log(`Server berjalan di port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server berjalan di port ${port}`);
+});
