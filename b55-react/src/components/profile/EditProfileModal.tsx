@@ -6,8 +6,6 @@ import {
   Button,
   CardMedia,
   IconButton,
-  ListItem,
-  ListItemAvatar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -30,13 +28,9 @@ const style = {
   pb: 1,
 };
 
-interface User {
-  name: string;
-  profilePict?: string;
-}
 
 export default function EditProfileModal() {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [open, setOpen] = React.useState<boolean>(false);
 
   const [name, setName] = React.useState<string>(user?.name || "");
