@@ -237,8 +237,9 @@ app.get('/users/:userId/follow/:followingId', async (req, res) => {
 
 
 
-
-
+app.get('/', (req, res) => {
+  res.send('Backend is working!');
+});
 
 
 
