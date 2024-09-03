@@ -1,6 +1,5 @@
 import { Box, Container } from "@mui/material";
 import LeftSidebar from "../components/root/LeftSidebar";
-import { theme } from "../Themes";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,7 +13,7 @@ interface DecodedToken {
 
 
 const RootLayout = () => {
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { user, setUser } = useUser(); // Moved inside the component
   const [ isLogin, setIsLogin ] = useState(false)

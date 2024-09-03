@@ -2,8 +2,7 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import SuggestedUser from '../user/SuggestedUser';
-import { CardActionArea, ImageList, Typography } from '@mui/material';
+import { CardActionArea, Typography } from '@mui/material';
 import StandardImageList from './ImageList';
 import { usePost } from '../../stores/PostContext';
 import { toast } from 'react-toastify';
@@ -45,7 +44,7 @@ function BasicTabs() {
   const { user } = useUser();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

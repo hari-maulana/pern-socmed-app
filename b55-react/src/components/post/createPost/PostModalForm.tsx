@@ -1,11 +1,9 @@
 import React, { useRef, useState } from "react";
 import {
-  Avatar,
   Box,
   Button,
   IconButton,
   ListItem,
-  ListItemAvatar,
   TextField,
 } from "@mui/material";
 import {
@@ -14,7 +12,6 @@ import {
   EmojiEmotionsOutlined,
   LocationOnOutlined,
 } from "@mui/icons-material";
-import { useUser } from "../../../stores/UserContext";
 import { theme } from "../../../Themes";
 import { toast } from "react-toastify";
 import PostHandler from "../postHandler";
@@ -22,7 +19,6 @@ import { usePost } from "../../../stores/PostContext";
 
 const PostModalForm = ({ handleClose }: { handleClose: () => void }) => {
   const { fetchAllPosts } = usePost();
-  const { user } = useUser();
   const [file, setFile] = useState<File | null>(null);
   const [prevImage, setPrevImage] = useState<string | ArrayBuffer | null>(null);
   const [content, setContent] = useState<string>("");
@@ -99,7 +95,6 @@ const PostModalForm = ({ handleClose }: { handleClose: () => void }) => {
             paddingBottom: "10px",
           }}
         >
-          <ListItemAvatar />
           <Box width="100%">
             <Box display="flex" justifyContent="flex-end">
               <IconButton onClick={() => setPrevImage(null)}>

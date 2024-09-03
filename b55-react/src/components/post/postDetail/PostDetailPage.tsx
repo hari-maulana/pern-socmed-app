@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import FeedItem from "../FeedItem";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import PostBarForm from "../createPost/PostBarForm";
 import Replies from "../replies/Replies";
 import RepliesBarForm from "../replies/RepliesBarForm";
 import { useUser} from "../../../stores/UserContext";

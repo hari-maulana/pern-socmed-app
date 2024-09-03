@@ -26,9 +26,7 @@ function Forgot() {
         >
         <LogoBrand />
         <Typography variant="h6" sx={{margin: "0 -10px 0 0"}}>Forgot password</Typography>
-        <InputField placeholder="Email*" type="email" value={""} onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
-            throw new Error("Function not implemented.");
-          } } />
+        <InputField placeholder="Email*" type="email" value={""} onChange={() => {}} />
         <Typography variant="h6" sx={{margin: "15px 0"}}>Already have an account? <Link onClick={() => navigate("/auth/login")} sx={{color: "FFD31D", textDecoration: "none", ":hover": {color: "#F6EEDF", cursor: "pointer"}}}>Login</Link></Typography>
         <CommonButton text="Confirm" />
         </Container>

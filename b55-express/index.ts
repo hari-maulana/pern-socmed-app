@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import path from 'path';
-import multer, { diskStorage } from 'multer';
+//import path from 'path';
+//import multer, { diskStorage } from 'multer';
 
 
 import {registerRoute, loginRoute} from './src/routes/authRoutes'
@@ -16,32 +16,40 @@ dotenv.config()
 
 // Middleware utk parse JSON
 app.use(express.json()); 
+
+
+app.use(cors({
+  origin: 'http://localhost:5173/', // Replace with your client-side domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(cors());
 
 
 /*FILE UPLOAD*/
-const storage = multer.diskStorage({
-  destination: './src/uploads/',
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`)
-  }
-})
-const upload = multer({
-  storage: storage,
-  limits: {fileSize: 10 * 1024 * 1024}
-})
+// const storage = multer.diskStorage({
+//   destination: './src/uploads/',
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}_${file.originalname}`)
+//   }
+// })
+// const upload = multer({
+//   storage: storage,
+//   limits: {fileSize: 10 * 1024 * 1024}
+// })
 
-app.use('/uploads', express.static(path.join(__dirname, 'src/uploads')))
+// app.use('/uploads', express.static(path.join(__dirname, 'src/uploads')))
 
-app.post('/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
-  res.json({
-    message: 'File uploaded successfully!',
-    filePath: `/uploads/${req.file.filename}`,
-  });
-});
+// app.post('/upload', upload.single('image'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('No file uploaded.');
+//   }
+//   res.json({
+//     message: 'File uploaded successfully!',
+//     filePath: `/uploads/${req.file.filename}`,
+//   });
+// });
 
 
 //app.use ini adalah middleware jadi misalkan setiap request yang masuk ke server, cth 
@@ -238,7 +246,7 @@ app.get('/users/:userId/follow/:followingId', async (req, res) => {
 
 
 app.get('/', (req, res) => {
-  res.send('Backend is working!');
+  res.send('Backend is workinggg!');
 });
 
 

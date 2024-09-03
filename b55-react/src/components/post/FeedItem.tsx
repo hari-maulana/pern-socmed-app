@@ -1,13 +1,10 @@
 import {
   CommentBankOutlined,
-  Favorite,
-  FavoriteBorder,
 } from "@mui/icons-material";
 import {
   Avatar,
   Box,
   CardActionArea,
-  Checkbox,
   IconButton,
   ListItem,
   ListItemAvatar,

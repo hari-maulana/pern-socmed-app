@@ -1,7 +1,6 @@
 import { Box, InputAdornment, TextField, Typography } from "@mui/material";
 import { theme } from "../../Themes";
 import RightSidebar from "../../components/root/RightSidebar";
-import UserList from "../../components/user/UserList";
 import { PersonSearch } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios";

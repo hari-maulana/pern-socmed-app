@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import LogoBrand from '../../components/commons/LogoBrand';
 import InputField from '../../components/commons/InputField';
 import CommonButton from '../../components/commons/CommonButton';
-import { useUser } from '../../stores/UserContext';
 import { toast } from 'react-toastify';
 
 const Register: React.FC = () => {

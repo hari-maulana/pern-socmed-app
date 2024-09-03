@@ -1,7 +1,5 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import axios from 'axios';
-import React from 'react'
-import { useParams } from 'react-router-dom'
 
 interface Props {
     id: string | undefined

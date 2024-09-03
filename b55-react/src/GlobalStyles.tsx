@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { GlobalStyles as MUIGlobalStyles } from '@mui/material';
-import { theme } from './Themes.tsx';
 
 const GlobalStyles: React.FC = () => (
   <MUIGlobalStyles

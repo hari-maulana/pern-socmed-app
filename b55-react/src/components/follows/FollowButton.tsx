@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { theme } from '../../Themes';
@@ -18,7 +18,7 @@ const FollowButton = ({ userId, followingId }: FollowButtonProps) => {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/${userId}/follow`, { followingId });
+      await axios.post(`${import.meta.env.VITE_API_URL}/users/${userId}/follow`, { followingId });
       
       // Toggle isFollowing based on whether the follow relation now exists
       setIsFollowing(!isFollowing);

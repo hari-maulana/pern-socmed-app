@@ -27,8 +27,8 @@ function Reset() {
         >
         <LogoBrand />
         <Typography variant="h6" sx={{margin: "0 -10px 0 0"}}>Reset password</Typography>
-        <InputField placeholder="New Password*" type="text" />
-        <InputField placeholder="Confirm New Password*" type="password" />
+        <InputField placeholder="New Password*" type="text" onChange={() => {}} value={""} />
+        <InputField placeholder="Confirm New Password*" type="password" onChange={() => {}} value={""} />
         <CommonButton text="Confirm" />
         </Container>
       </Box>

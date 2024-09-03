@@ -1,8 +1,5 @@
 import {
   Box,
-  Icon,
-  Link,
-  Stack,
   Typography,
 } from "@mui/material";
 import { theme } from "../../Themes";

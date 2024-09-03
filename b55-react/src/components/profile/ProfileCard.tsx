@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { theme } from "../../Themes";
 import { useUser } from "../../stores/UserContext";
-import PostModal from "../post/createPost/PostModal";
 import EditProfileModal from "./EditProfileModal";
 const ProfileCard = () => {
   const { user } = useUser();
