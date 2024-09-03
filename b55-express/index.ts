@@ -19,7 +19,7 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin: 'http://localhost:5173/', // Replace with your client-side domain
+  origin: 'https://cicrcleapp-hm.vercel.app', // Replace with your client-side domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
