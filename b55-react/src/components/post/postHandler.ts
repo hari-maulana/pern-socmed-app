@@ -29,7 +29,7 @@ const PostHandler = async (content: string, file: File | null) => {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            picturePath = `http://localhost:3000${res.data.filePath}`;
+            picturePath = `${res.data.filePath}`;
             toast.success(res.data.message);
             toast.success(picturePath);
 
