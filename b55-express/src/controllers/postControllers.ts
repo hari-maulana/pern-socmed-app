@@ -78,7 +78,21 @@ const getAllPost = async (req: express.Request, res: express.Response ) => {
         where: { id: parseInt(id) },
         include: {
           likes: true,
-          comments: true,
+          comments: {
+            include: {
+              user: {
+                select: {
+                  profilePict: true,
+                  name: true,
+                  username: true,
+                },
+              },
+            },
+            orderBy: {
+              createdAt: 'desc',
+            },
+          },
+
           author: {
             select: {
               profilePict: true,
