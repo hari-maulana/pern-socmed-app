@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
-import { theme } from "../../Themes";
 import { red } from "@mui/material/colors";
 
 interface LikeButtonProps {
