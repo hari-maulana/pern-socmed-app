@@ -1,191 +1,107 @@
-import { PrismaClient } from '@prisma/client';
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-//import path from 'path';
-//import multer, { diskStorage } from 'multer';
-import multer from 'multer';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import cloudinary from 'cloudinary';
-
-
-import {registerRoute, loginRoute} from './src/routes/authRoutes'
-import userRoutes from './src/routes/userRoutes'
-import postRoutes from './src/routes/postRoutes'
+import { PrismaClient } from "@prisma/client";
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import { registerRoute, loginRoute } from "./src/routes/authRoutes";
+import userRoutes from "./src/routes/userRoutes";
+import postRoutes from "./src/routes/postRoutes";
+import { upload } from "./src/cloudinary/fileUpload";
 
 const prisma = new PrismaClient();
 const app = express();
-dotenv.config()
+dotenv.config();
 
-// Middleware utk parse JSON
-app.use(express.json()); 
-
-
-app.use(cors({
-  origin: 'https://cicrcleapp-hm.vercel.app', // Replace with your client-side domain
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
+// Middleware
+app.use(express.json());
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-
-
-
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-// Define types for Cloudinary storage parameters
-interface CloudinaryParams {
-  folder?: string;
-  allowed_formats?: string[];
-  public_id?: (req: express.Request, file: Express.Multer.File) => string;
-}
-
-// Configure Cloudinary storage for Multer
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2,
-  params: {
-    folder: 'uploads', // Folder where the files will be uploaded
-    allowed_formats: ['jpg', 'jpeg', 'png'], // Allowed formats
-    public_id: (req, file) => `${Date.now()}_${file.originalname}`, // Custom filename
-  } as CloudinaryParams,
-});
-
-// Create multer instance with Cloudinary storage
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB file size limit
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "https://cicrcleapp-hm.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Upload route
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
-    return res.status(400).send('No file uploaded.');
+    return res.status(400).send("No file uploaded.");
   }
-
-  // Cloudinary will provide the file URL
   res.json({
-    message: 'File uploaded successfully!',
-    filePath: req.file.path, // Cloudinary URL of the uploaded file
+    message: "File uploaded successfully!",
+    filePath: req.file.path,
   });
 });
 
-
-
-/*FILE UPLOAD*/
-// const storage = multer.diskStorage({
-//   destination: './src/uploads/',
-//   filename: (req, file, cb) => {
-//     cb(null, `${Date.now()}_${file.originalname}`)
-//   }
-// })
-// const upload = multer({
-//   storage: storage,
-//   limits: {fileSize: 10 * 1024 * 1024}
-// })
-
-// app.use('/uploads', express.static(path.join(__dirname, 'src/uploads')))
-
-// app.post('/upload', upload.single('image'), (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).send('No file uploaded.');
-//   }
-//   res.json({
-//     message: 'File uploaded successfully!',
-//     filePath: `/uploads/${req.file.filename}`,
-//   });
-// });
-
-
-//app.use ini adalah middleware jadi misalkan setiap request yang masuk ke server, cth 
-
-
-
-
 // auth routes
-app.use('/auth', registerRoute)
-app.use('/auth', loginRoute)
-
+app.use("/auth", registerRoute);
+app.use("/auth", loginRoute);
 // user routes
-app.use('/users', userRoutes)
-
+app.use("/users", userRoutes);
 // post routes
-app.use('/posts', postRoutes)
-
-///////////////////////
-
-
-/////////////////////////////
+app.use("/posts", postRoutes);
 
 //TOGGLE LIKE
-
-
-
-app.post('/toggle-like', async (req, res) => {
+app.post("/toggle-like", async (req, res) => {
   try {
     const { userId, postId } = req.body;
 
     if (!userId || !postId) {
-      return res.status(400).json({ error: 'userId and postId are required' });
+      return res.status(400).json({ error: "userId and postId are required" });
     }
 
     const existingLike = await prisma.like.findFirst({
       where: {
         userId: parseInt(userId),
-        postId: parseInt(postId)
-      }
+        postId: parseInt(postId),
+      },
     });
 
     if (existingLike) {
       // Unlike the post
       await prisma.like.delete({
         where: {
-          id: existingLike.id
-        }
+          id: existingLike.id,
+        },
       });
-      return res.status(200).json({ message: 'Post unliked successfully' });
+      return res.status(200).json({ message: "Post unliked successfully" });
     } else {
       // Like the post
       await prisma.like.create({
         data: {
           userId: parseInt(userId),
-          postId: parseInt(postId)
-        }
+          postId: parseInt(postId),
+        },
       });
-      return res.status(200).json({ message: 'Post liked successfully' });
+      return res.status(200).json({ message: "Post liked successfully" });
     }
   } catch (error) {
-    console.error('Error toggling like:', error);
-    return res.status(500).json({ error: 'An error occurred while toggling like' });
+    console.error("Error toggling like:", error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while toggling like" });
   }
 });
 
-
-
 //toggleLike(2, 1)
 
-////////////////////////////////
 //  TEST COMMENT
-
-app.post('/posts/:postId/comments', async (req, res) => {
+app.post("/posts/:postId/comments", async (req, res) => {
   const { postId } = req.params;
   const { content, userId } = req.body;
 
   // Input validation
   if (!postId || !content || !userId) {
-    return res.status(400).json({ error: 'Missing required fields' });
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
     // Ensure postId is an integer
     const parsedPostId = parseInt(postId, 10);
     if (isNaN(parsedPostId)) {
-      return res.status(400).json({ error: 'Invalid post ID' });
+      return res.status(400).json({ error: "Invalid post ID" });
     }
 
     // Create comment
@@ -193,16 +109,16 @@ app.post('/posts/:postId/comments', async (req, res) => {
       data: {
         postId: parsedPostId,
         content,
-        userId
-      }
+        userId,
+      },
     });
 
     // Respond with the created comment
     res.status(201).json(postComment);
   } catch (error) {
     // Log the error for debugging
-    console.error('Error creating comment:', error);
-    res.status(500).json({ error: 'Failed to create comment' });
+    console.error("Error creating comment:", error);
+    res.status(500).json({ error: "Failed to create comment" });
   }
 });
 
@@ -225,9 +141,7 @@ app.post('/posts/:postId/comments', async (req, res) => {
 
 // })
 
-
-
-app.post('/users/:userId/follow', async (req, res) => {
+app.post("/users/:userId/follow", async (req, res) => {
   const { userId } = req.params;
   const { followingId } = req.body;
 
@@ -237,7 +151,7 @@ app.post('/users/:userId/follow', async (req, res) => {
       where: {
         followerId: parseInt(userId),
         followingId: parseInt(followingId),
-      }
+      },
     });
 
     if (existingFollow) {
@@ -245,8 +159,8 @@ app.post('/users/:userId/follow', async (req, res) => {
       await prisma.followRelation.deleteMany({
         where: {
           followerId: parseInt(userId),
-          followingId: parseInt(followingId)
-        }
+          followingId: parseInt(followingId),
+        },
       });
       res.status(200).json({ message: "Unfollowed successfully" });
     } else {
@@ -254,8 +168,8 @@ app.post('/users/:userId/follow', async (req, res) => {
       const follow = await prisma.followRelation.create({
         data: {
           followerId: parseInt(userId),
-          followingId: parseInt(followingId)
-        }
+          followingId: parseInt(followingId),
+        },
       });
       res.status(200).json(follow);
     }
@@ -264,9 +178,7 @@ app.post('/users/:userId/follow', async (req, res) => {
   }
 });
 
-
-
-app.get('/users/:userId/follow/:followingId', async (req, res) => {
+app.get("/users/:userId/follow/:followingId", async (req, res) => {
   const { userId, followingId } = req.params;
 
   try {
@@ -280,29 +192,19 @@ app.get('/users/:userId/follow/:followingId', async (req, res) => {
     if (follow) {
       res.status(200).json(follow);
     } else {
-      res.status(204).json({ error: 'Follow relation not found' });
+      res.status(204).json({ error: "Follow relation not found" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while retrieving the follow relation' });
+    res.status(500).json({
+      error: "An error occurred while retrieving the follow relation",
+    });
   }
 });
 
-
-
-
-
-
-
-
-
-
-app.get('/', (req, res) => {
-  res.send('Backend is workinggg!');
+app.get("/", (req, res) => {
+  res.send("Backend is workinggg!");
 });
-
-
-
 
 const port = process.env.PORT;
 
