@@ -1,30 +1,30 @@
-import React, { useState, FormEvent } from 'react';
-import { Box, Container, Typography, Link } from '@mui/material';
-import axios from 'axios';
+import React, { useState, FormEvent } from "react";
+import { Box, Container, Typography, Link } from "@mui/material";
+import axios from "axios";
 
-import { useNavigate } from 'react-router-dom';
-import LogoBrand from '../../components/commons/LogoBrand';
-import InputField from '../../components/commons/InputField';
-import CommonButton from '../../components/commons/CommonButton';
-import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import LogoBrand from "../../components/commons/LogoBrand";
+import InputField from "../../components/commons/InputField";
+import CommonButton from "../../components/commons/CommonButton";
+import { toast } from "react-toastify";
 
 const Register: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [username, setUsername] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-    toast.success('Your account has been created! Please login!');
+    setError("");
+    setSuccess("");
+    toast.success("Your account has been created! Please login!");
 
     setTimeout(() => {
-      navigate('/auth/login');
+      navigate("/auth/login");
     }, 1500);
 
     //
@@ -40,16 +40,18 @@ const Register: React.FC = () => {
           setSuccess(response.data.message);
         })
         .catch((error) => {
-          setError(error.response.data.error);
+          if (axios.isAxiosError(error) && error.response) {
+            setError(error.response.data.error);
+            console.log(error);
+          }
         });
-        
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <Container sx={{ backgroundColor: '', height: '100vh' }}>
+    <Container sx={{ backgroundColor: "", height: "100vh" }}>
       <Box
         display="flex"
         justifyContent="center"
@@ -59,17 +61,20 @@ const Register: React.FC = () => {
         <Container
           maxWidth="xs"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '',
-            margin: 'auto auto',
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "",
+            margin: "auto auto",
           }}
         >
           <LogoBrand />
-          <Typography variant="h4" sx={{ margin: '15px 0' }}>
+          <Typography variant="h4" sx={{ margin: "15px 0" }}>
             Ascend your Journey to the Next Level!
           </Typography>
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <InputField
               placeholder="name*"
               type="name"
@@ -97,17 +102,17 @@ const Register: React.FC = () => {
             <CommonButton text="Create Account" />
           </form>
 
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {success && <p style={{ color: 'green' }}>{success}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && <p style={{ color: "green" }}>{success}</p>}
 
-          <Typography variant="h6" sx={{ margin: '15px 0' }}>
-            Already have an account?{' '}
+          <Typography variant="h6" sx={{ margin: "15px 0" }}>
+            Already have an account?{" "}
             <Link
-              onClick={() => navigate('/auth/login')}
+              onClick={() => navigate("/auth/login")}
               sx={{
-                color: 'FFD31D',
-                textDecoration: 'none',
-                ':hover': { color: '#F6EEDF', cursor: 'pointer' },
+                color: "FFD31D",
+                textDecoration: "none",
+                ":hover": { color: "#F6EEDF", cursor: "pointer" },
               }}
             >
               Login
