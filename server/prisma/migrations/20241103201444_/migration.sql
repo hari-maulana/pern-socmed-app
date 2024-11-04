@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Post" (
     "id" SERIAL NOT NULL,
-    "picturePath" TEXT NOT NULL,
+    "picturePath" TEXT,
     "content" TEXT NOT NULL,
     "authorId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
