@@ -4,7 +4,6 @@ import RightSidebar from "../../components/root/RightSidebar";
 import Post from "../../components/post/createPost/PostBarForm";
 import Feed from "../../components/root/Feed";
 
-
 const Home = () => {
   return (
     <>
@@ -21,10 +20,10 @@ const Home = () => {
           borderLeft: "1px solid",
           borderRight: "1px solid",
           borderColor: theme.palette.divider,
-          scrollbarWidth: 'none', // Hide scrollbar for Firefox
-          '&::-webkit-scrollbar': {
-            display: 'none', // Hide scrollbar for Chrome, Safari, and Opera
-        },
+          scrollbarWidth: "none", // Hide scrollbar for Firefox
+          "&::-webkit-scrollbar": {
+            display: "none", // Hide scrollbar for Chrome, Safari, and Opera
+          },
         }}
       >
         <Box
@@ -44,8 +43,6 @@ const Home = () => {
           <Typography variant="h6" fontWeight={"bold"}>
             Home
           </Typography>
-          
-          
         </Box>
         <Post />
         <Feed />

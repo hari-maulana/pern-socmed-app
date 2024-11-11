@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
-import { theme } from "../../Themes";
 
 const LogoBrand = () => {
   return (
     <>
       <Typography
-        fontSize={"40px"}
+        className="brand"
+        fontSize={"51px"}
         fontFamily={"arial"}
-        sx={{ margin: "0", padding: "0", color: theme.palette.text.secondary }}
+        sx={{ margin: "0", padding: "0" }}
       >
         ascend.
       </Typography>
